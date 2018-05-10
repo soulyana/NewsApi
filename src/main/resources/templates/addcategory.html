@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org.thymeleaf-extras-springsecurity4">
+
+<head th:replace="/index::htmlhead">
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav th:replace="/index::navbar">
+</nav>
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('/img/about-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    <h1>Categories</h1>
+                    <span class="subheading">Select categories of news items you would like displayed</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<!--//need th field, th value, th checked(shows wether item is selected or not in list)-->
+<div class="container" sec:authorize="isAuthenticated()">
+    <form th:action="@{/addcategory}" th:object="${aCategory}" method="post">
+        <!--<input type="hidden" th:field="*{id}">-->
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" th:field="*{name}" id="inlineCheckbox1" th:value="*{topnews}">
+            <label class="form-check-label" for="inlineCheckbox1">Top News</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" th:field="*{business}" th:value="*{business}">
+            <label class="form-check-label" for="inlineCheckbox2">Business</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" th:field="*{entertainment}" th:value="*{entertainment}">
+            <label class="form-check-label" for="inlineCheckbox3">Entertainment</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox4" th:field="*{general}" th:value="*{general}">
+            <label class="form-check-label" for="inlineCheckbox1">General</label>
+        </div>
+        <div class="row">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox5" th:field="*{health}" th:value="*{health}">
+                <label class="form-check-label" for="inlineCheckbox2">Health</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox6" th:field="*{science}" th:value="*{science}">
+                <label class="form-check-label" for="inlineCheckbox3">Science</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox7" th:field="*{sports}" th:value="*{sports}">
+                <label class="form-check-label" for="inlineCheckbox1">Sports</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox8" th:field="*{technology}" th:value="*{technology}">
+                <label class="form-check-label" for="inlineCheckbox2">Technology</label>
+            </div>
+        </div>
+    </form>
+
+    <!-- Footer -->
+    <footer th:replace="/index::footer">
+    </footer>
+
+    <div th:replace="/index::scripts"></div>
+</div>
+</body>
+</html>

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,9 @@ public class MainController {
 
     @Autowired
     AppRoleRepository roles;
+
+    @Autowired
+    CategoryRepository categories;
 
     @RequestMapping("/register")
     public String registerNewUser(Model model) {
@@ -38,6 +42,22 @@ public class MainController {
     @RequestMapping("/login")
     public String showLogin() {
         return "login";
+    }
+
+    @GetMapping("/addcategory")
+    public String addCategories(Model model) {
+        model.addAttribute("aCategory", new Category());
+        return "addcategory";
+    }
+
+    @PostMapping("/addcategory")
+    public String addCategories(@Valid @ModelAttribute("aCategory") Category category, BindingResult result) {
+        if(result.hasErrors()) {
+            return "addcategory";
+        } else {
+            categories.save(category);
+        }
+        return "redirect:/";
     }
 
     @RequestMapping("/")

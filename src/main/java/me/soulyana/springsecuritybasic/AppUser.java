@@ -29,9 +29,13 @@ public class AppUser {
     @ManyToMany(mappedBy = "users",fetch =FetchType.EAGER)
     private Set<AppRole> roles;
 
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+    private Set<Category> categories;
+
     public AppUser() {
         //Create an empty set of roles so that it can be added to when a new user is created in memory
         this.roles=new HashSet<>();
+        this.categories = new HashSet<>();
 
         //Instantiate the password encoder so it can be used.
         encoder = new BCryptPasswordEncoder();
@@ -68,5 +72,13 @@ public class AppUser {
 
     public void setRoles(Set<AppRole> roles) {
         this.roles = roles;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
