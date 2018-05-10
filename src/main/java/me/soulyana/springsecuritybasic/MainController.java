@@ -1,12 +1,44 @@
 package me.soulyana.springsecuritybasic;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
+import javax.validation.Valid;
+
 @Controller
 public class MainController {
+    @Autowired
+    AppUserRepository users;
+
+    @Autowired
+    AppRoleRepository roles;
+
+    @RequestMapping("/register")
+    public String registerNewUser(Model model) {
+        model.addAttribute("aUser", new AppUser());
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String processNewUser(@Valid @ModelAttribute("aUser") AppUser user, BindingResult result) {
+        if(result.hasErrors()) {
+            return "register";
+        } else {
+            users.save(user);
+        }
+        return "redirect:/";
+    }
+
+    @RequestMapping("/login")
+    public String showLogin() {
+        return "login";
+    }
 
     @RequestMapping("/")
     public String showIndex(Model model) {
